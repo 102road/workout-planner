@@ -63,6 +63,11 @@ const createExerciseItem = (item, index, option) => {
     removeButton.setAttribute("value", index);
     removeButton.innerHTML = "Remove";
     card.appendChild(removeButton);
+    removeButton.addEventListener('click', (e)=> {
+      const exerciseCardIndex = e.target.value;
+      schedule.filter((exercise, index) => index !== exerciseCardIndex)
+      renderSchedule();
+    } )
   }
 
   card.append(title, gif, muscle, equipment);
@@ -130,9 +135,8 @@ button.addEventListener("click", () => {
 const previous = document.querySelector(".previous");
 
 previous.addEventListener("click", () => {
-  if (!listSizeIndicator) {
+  if (listSizeIndicator) {
     listSizeIndicator = listSizeIndicator - 50;
-    return;
+    fetchExerciseData();
   }
-  fetchExerciseData();
 });
