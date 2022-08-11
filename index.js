@@ -1,49 +1,78 @@
+//API info needed for request
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": process.env.API_KEY,
+    "X-RapidAPI-Key": "ee887cea7cmsh9b63ecc603532f4p1c091fjsna66789a6f9e4",
     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
   },
 };
 
-// Get all body parts
-// fetch("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", options)
-//   .then((response) => response.json())
-//   .then((response) => console.log(response))
-//   .catch((err) => console.error(err));
+const parentEl = document.querySelector(".main");
+let exerciseList = [];
+let bodyPart = '';
+let listSizeIndicator = 0;
 
-// // Get all exercises
-// fetch("https://exercisedb.p.rapidapi.com/exercises", options)
-//   .then((response) => response.json())
-//   .then((response) => console.log(response))
-//   .catch((err) => console.error(err));
-
-// // Get exercise by body part
-// fetch(
-//   "https://exercisedb.p.rapidapi.com/exercises/bodyPart/%7BbodyPart%7D",
-//   options
-// )
-//   .then((response) => response.json())
-//   .then((response) => console.log(response))
-//   .catch((err) => console.error(err));
-
-//Create Select opttions Function
+//Functions that create elements
 const createOption = (item, index) => {
   const option = document.createElement("option");
-  option.setAttribute("value", index);
+  option.setAttribute("value", item);
   option.innerHTML = item;
-  
+
   const select = document.querySelector(".select");
 
   select.append(option);
 };
 
-//Create drop down menu function
-const createMenu = () => {
-  const data = fetch(
-    "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+const createExerciseItem = (item) => {
+  const card = document.createElement("article");
+
+  const title = document.createElement("h1");
+  title.setAttribute("class", "name");
+  title.innerHTML = item.name;
+
+  const gif = document.createElement("img");
+  gif.setAttribute("src", item.gifUrl);
+
+  const muscle = document.createElement("p");
+  muscle.setAttribute("class", "muscle");
+  muscle.innerHTML = item.target;
+
+  const equipment = document.createElement("p");
+  equipment.setAttribute("class", "equipment");
+  equipment.innerHTML = item.equipment;
+
+  card.append(title, gif, muscle, equipment);
+  return card;
+};
+
+// Render Function
+
+const renderExercises = () => {
+  parentEl.innerHTML = "";
+  exerciseList.forEach((exercise) =>
+    parentEl.appendChild(createExerciseItem(exercise))
+  );
+};
+
+const fetchExerciseData = () => {
+  fetch(
+    `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
     options
   )
+    .then((response) => response.json())
+    .then((response) => {
+      exerciseList = response.slice(
+        listSizeIndicator,
+        listSizeIndicator + 49
+      );
+      renderExercises();
+    })
+    .catch((err) => console.error(err));
+};
+
+//Create drop down menu function
+const fetchMenuData = () => {
+  fetch("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", options)
     .then((response) => response.json())
     .then((response) => {
       console.log(response);
@@ -52,4 +81,19 @@ const createMenu = () => {
     .catch((err) => console.error(err));
 };
 
-createMenu();
+fetchMenuData();
+
+const button = document.querySelector(".button");
+
+button.addEventListener("click", () => {
+  listSizeIndicator = listSizeIndicator + 50;
+  fetchExerciseData();
+});
+
+const select = document.querySelector(".select");
+
+select.addEventListener("change", (event) => {
+  bodyPart = event.target.value;
+  console.log(bodyPart);
+  fetchExerciseData();
+});
