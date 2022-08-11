@@ -2,7 +2,7 @@
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key":,
+    "X-RapidAPI-Key": "ee887cea7cmsh9b63ecc603532f4p1c091fjsna66789a6f9e4",
     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
   },
 };
@@ -27,7 +27,7 @@ const createOption = (item) => {
 
 const createExerciseItem = (item, index, option) => {
   const card = document.createElement("article");
-  card.setAttribute("class", `article ${item.name}`);
+  card.setAttribute("class", "article");
 
   const title = document.createElement("h1");
   title.setAttribute("class", "name");
@@ -35,6 +35,7 @@ const createExerciseItem = (item, index, option) => {
 
   const gif = document.createElement("img");
   gif.setAttribute("src", item.gifUrl);
+  gif.setAttribute("class", "gif");
 
   const muscle = document.createElement("p");
   muscle.setAttribute("class", "muscle");
@@ -42,7 +43,7 @@ const createExerciseItem = (item, index, option) => {
 
   const equipment = document.createElement("p");
   equipment.setAttribute("class", "equipment");
-  equipment.innerHTML = `Equipment needed:${item.equipment}`;
+  equipment.innerHTML = `Equipment needed: ${item.equipment}`;
 
   // Button is given a value of index so the exercise can be found within the array so it can be added to the schedule
   if (!option) {
@@ -51,23 +52,27 @@ const createExerciseItem = (item, index, option) => {
     addButton.setAttribute("value", index);
     addButton.innerHTML = "Add";
     card.append(addButton);
+
     addButton.addEventListener("click", (e) => {
       const exerciseCardIndex = e.target.value;
       const exercise = exerciseList[exerciseCardIndex];
       schedule.push(exercise);
       renderSchedule();
     });
+
   } else {
     const removeButton = document.createElement("button");
     removeButton.setAttribute("class", "remove");
     removeButton.setAttribute("value", index);
     removeButton.innerHTML = "Remove";
     card.appendChild(removeButton);
-    removeButton.addEventListener('click', (e)=> {
+
+    removeButton.addEventListener("click", (e) => {
       const exerciseCardIndex = e.target.value;
-      schedule.filter((exercise, index) => index !== exerciseCardIndex)
+      schedule.filter((exercise, index) => index !== exerciseCardIndex);
       renderSchedule();
-    } )
+    });
+    
   }
 
   card.append(title, gif, muscle, equipment);

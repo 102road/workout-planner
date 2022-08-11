@@ -1,0 +1,23 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: aqua;
+}
+
+.main{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.article{
+    background-color: coral;
+    border: solid 2px grey;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.gif{
+    width: 50px;
+}
