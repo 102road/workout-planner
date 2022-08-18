@@ -2,7 +2,7 @@
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "ee887cea7cmsh9b63ecc603532f4p1c091fjsna66789a6f9e4",
+    "X-RapidAPI-Key": "b4e9548095mshb23d8376b4c75e4p17b07ajsn9944ed5ec0fc",
     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
   },
 };
@@ -59,7 +59,6 @@ const createExerciseItem = (item, index, option) => {
       schedule.push(exercise);
       renderSchedule();
     });
-
   } else {
     const removeButton = document.createElement("button");
     removeButton.setAttribute("class", "remove");
@@ -69,12 +68,11 @@ const createExerciseItem = (item, index, option) => {
 
     removeButton.addEventListener("click", (e) => {
       const exerciseCardIndex = e.target.value;
-      schedule.filter((exercise, index) => index !== exerciseCardIndex);
+      schedule.filter((exercise, index) => index != exerciseCardIndex);
+      console.log(schedule);
       renderSchedule();
     });
-    
   }
-
   card.append(title, gif, muscle, equipment);
   return card;
 };
@@ -89,6 +87,7 @@ const renderExercises = () => {
 };
 
 const renderSchedule = () => {
+  scheduleEl.innerHTML = "";
   schedule.forEach((exercise, index) => {
     scheduleEl.appendChild(createExerciseItem(exercise, index, true));
   });
@@ -101,7 +100,7 @@ const fetchExerciseData = () => {
   )
     .then((response) => response.json())
     .then((response) => {
-      exerciseList = response.slice(listSizeIndicator, listSizeIndicator + 49);
+      exerciseList = response.slice(listSizeIndicator, listSizeIndicator + 24);
       renderExercises();
     })
     .catch((err) => console.error(err));
@@ -133,7 +132,7 @@ select.addEventListener("change", (e) => {
 const button = document.querySelector(".button");
 
 button.addEventListener("click", () => {
-  listSizeIndicator = listSizeIndicator + 50;
+  listSizeIndicator = listSizeIndicator + 25;
   fetchExerciseData();
 });
 
@@ -141,7 +140,7 @@ const previous = document.querySelector(".previous");
 
 previous.addEventListener("click", () => {
   if (listSizeIndicator) {
-    listSizeIndicator = listSizeIndicator - 50;
+    listSizeIndicator = listSizeIndicator - 25;
     fetchExerciseData();
   }
 });

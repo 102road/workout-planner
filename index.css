@@ -9,15 +9,32 @@ body{
 .main{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .article{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     background-color: coral;
     border: solid 2px grey;
     border-radius: 1rem;
     margin: 1rem;
+    width: 20rem;
+}
+
+.button{
+    margin: 1rem;
 }
 
 .gif{
-    width: 50px;
+    width: 15rem;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.schedule {
+    display: flex;
+    flex-wrap: wrap;
 }
