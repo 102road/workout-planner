@@ -68,8 +68,11 @@ const createExerciseItem = (item, index, option) => {
 
     removeButton.addEventListener("click", (e) => {
       const exerciseCardIndex = e.target.value;
-      schedule.filter((exercise, index) => index != exerciseCardIndex);
-      console.log(schedule);
+      let newSchedule = schedule.filter((exercise, index) => 
+        index !== exerciseCardIndex
+      );
+      console.log(newSchedule);
+      schedule = newSchedule;
       renderSchedule();
     });
   }
@@ -111,7 +114,6 @@ const fetchMenuData = () => {
   fetch("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", options)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
       response.map((item) => createOption(item));
     })
     .catch((err) => console.error(err));
@@ -125,7 +127,6 @@ const select = document.querySelector(".select");
 
 select.addEventListener("change", (e) => {
   bodyPart = e.target.value;
-  console.log(bodyPart);
   fetchExerciseData();
 });
 
