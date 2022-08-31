@@ -2,7 +2,7 @@
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "b4e9548095mshb23d8376b4c75e4p17b07ajsn9944ed5ec0fc",
+    "X-RapidAPI-Key": "ece6f604bcmsh77c41ad62cef63fp1492dbjsn67ad0a672cac",
     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
   },
 };
@@ -57,22 +57,6 @@ const createExerciseItem = (item, index, option) => {
       const exerciseCardIndex = e.target.value;
       const exercise = exerciseList[exerciseCardIndex];
       schedule.push(exercise);
-      renderSchedule();
-    });
-  } else {
-    const removeButton = document.createElement("button");
-    removeButton.setAttribute("class", "remove");
-    removeButton.setAttribute("value", index);
-    removeButton.innerHTML = "Remove";
-    card.appendChild(removeButton);
-
-    removeButton.addEventListener("click", (e) => {
-      const exerciseCardIndex = e.target.value;
-      let newSchedule = schedule.filter((exercise, index) => 
-        index !== exerciseCardIndex
-      );
-      console.log(newSchedule);
-      schedule = newSchedule;
       renderSchedule();
     });
   }
