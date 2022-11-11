@@ -1,15 +1,30 @@
 *{
     box-sizing: border-box;
+    margin: 0;
+}
+
+
+html{
+    height: 100vh;
 }
 
 body{
     background-color: white;
+    height: 100%;
+}
+
+.header{
+    height: 30%;
+    display: flex;
 }
 
 .main{
+    height: 60%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
+    overflow-x: auto;
 }
 
 .article{
@@ -20,7 +35,8 @@ body{
     border: solid 2px grey;
     border-radius: 1rem;
     margin: 1rem;
-    width: 20rem;
+    width: 20%;
+    height: 100%;
 }
 
 .button{
@@ -28,12 +44,12 @@ body{
 }
 
 .gif{
-    width: 15rem;
+    width: 100%;
     border-radius: 1rem;
-    margin: 1rem;
+    margin: 1rem 0;
 }
 
 .schedule {
-    display: flex;
-    flex-wrap: wrap;
+    height: 80%;
+    overflow-x: auto;
 }

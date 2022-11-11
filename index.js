@@ -25,13 +25,12 @@ const createOption = (item) => {
   select.append(option);
 };
 
-// CREATES INDIVIDUAL EXERCISE ITEM
-const createExerciseItem = (item, index, option) => {
+//CREATES LIST OF EXERCISES
+const createListCard = (item, index) => {
   const card = document.createElement("article");
   card.setAttribute("class", "article");
 
   const title = document.createElement("h1");
-  title.setAttribute("class", "name");
   title.innerHTML = item.name;
 
   const gif = document.createElement("img");
@@ -39,29 +38,58 @@ const createExerciseItem = (item, index, option) => {
   gif.setAttribute("class", "gif");
 
   const muscle = document.createElement("p");
-  muscle.setAttribute("class", "muscle");
   muscle.innerHTML = `Target muscle: ${item.target}`;
 
   const equipment = document.createElement("p");
   equipment.setAttribute("class", "equipment");
   equipment.innerHTML = `Equipment needed: ${item.equipment}`;
 
-  // Button is given a value of index so the exercise can be found within the array so it can be added to the schedule
-  if (!option) {
-    const addButton = document.createElement("button");
-    addButton.setAttribute("class", "add");
-    addButton.setAttribute("value", index);
-    addButton.innerHTML = "Add";
-    card.append(addButton);
+  const addButton = document.createElement("button");
+  addButton.setAttribute("class", "add");
+  addButton.setAttribute("value", index);
+  addButton.innerHTML = "Add";
 
-    addButton.addEventListener("click", (e) => {
-      const exerciseCardIndex = e.target.value;
-      const exercise = exerciseList[exerciseCardIndex];
-      schedule.push(exercise);
-      renderSchedule();
-    });
-  }
-  card.append(title, gif, muscle, equipment);
+  addButton.addEventListener("click", (e) => {
+    const exerciseCardIndex = e.target.value;
+    const exercise = exerciseList[exerciseCardIndex];
+    schedule.push(exercise);
+    renderSchedule();
+  });
+
+  exerciseCard.append(card, title, gif, muscle, equipment, addButton);
+
+  return exerciseCard;
+};
+
+//CREATES EXERCISE SCHEDULE
+const createScheduleCard = (item, index) => {
+
+  const card = document.createElement('article');
+  card.setAttribute('class', 'record');
+
+  const title = document.createElement('p');
+  title.setAttribute('class', 'title');
+  title.innerHTML = item.name
+
+  // TODO possibly make gif and have a hover feature
+  
+  const muscle = document.createElement('p');
+  muscle.setAttribute('class', 'info');
+  muscle.innerHTML = item.target
+
+  const equipment = document.createElement('p');
+  equipment.setAttribute('class', 'info');
+  equipment.innerHTML = item.equipment;
+
+  const removeButton = document.createElement("button");
+  removeButton.setAttribute("class", "remove");
+  removeButton.setAttribute("value", index);
+  removeButton.innerHTML = "Remove";
+
+  //TODO Write remove event handler
+
+  card.append(title, muscle, equipment, removeButton);
+
   return card;
 };
 
@@ -70,14 +98,14 @@ const createExerciseItem = (item, index, option) => {
 const renderExercises = () => {
   parentEl.innerHTML = "";
   exerciseList.forEach((exercise, index) =>
-    parentEl.appendChild(createExerciseItem(exercise, index, false))
+    parentEl.appendChild(createListCard(exercise, index))
   );
 };
 
 const renderSchedule = () => {
   scheduleEl.innerHTML = "";
   schedule.forEach((exercise, index) => {
-    scheduleEl.appendChild(createExerciseItem(exercise, index, true));
+    scheduleEl.appendChild(createScheduleCard(exercise, index));
   });
 };
 
@@ -90,7 +118,7 @@ const fetchExerciseData = () => {
   )
     .then((response) => response.json())
     .then((response) => {
-      exerciseList = response.slice(listSizeIndicator, listSizeIndicator + 24);
+      exerciseList = response.slice(listSizeIndicator, listSizeIndicator + 25);
       renderExercises();
     })
     .catch((err) => console.error(err));
