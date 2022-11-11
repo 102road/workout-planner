@@ -14,7 +14,7 @@ let bodyPart = "";
 let listSizeIndicator = 0;
 let schedule = [];
 
-//Functions that create elements
+//CREATES OPTIONS SELECT DROPDOWN
 const createOption = (item) => {
   const option = document.createElement("option");
   option.setAttribute("value", item);
@@ -25,6 +25,7 @@ const createOption = (item) => {
   select.append(option);
 };
 
+// CREATES INDIVIDUAL EXERCISE ITEM
 const createExerciseItem = (item, index, option) => {
   const card = document.createElement("article");
   card.setAttribute("class", "article");
@@ -80,6 +81,8 @@ const renderSchedule = () => {
   });
 };
 
+//FETCH FUNCTIONS
+
 const fetchExerciseData = () => {
   fetch(
     `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
@@ -93,7 +96,6 @@ const fetchExerciseData = () => {
     .catch((err) => console.error(err));
 };
 
-//Create drop down menu function
 const fetchMenuData = () => {
   fetch("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", options)
     .then((response) => response.json())
@@ -102,6 +104,8 @@ const fetchMenuData = () => {
     })
     .catch((err) => console.error(err));
 };
+
+// MAIN
 
 fetchMenuData();
 
