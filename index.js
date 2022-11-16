@@ -18,7 +18,7 @@ let schedule = [];
 const capitilize = (str) => {
   let join = str[0].toUpperCase() + str.slice(1);
   return join;
-}
+};
 
 //CREATES OPTIONS SELECT DROPDOWN
 const createOption = (item) => {
@@ -35,6 +35,7 @@ const createOption = (item) => {
 const createListCard = (item, index) => {
   const card = document.createElement("article");
   card.setAttribute("class", "article");
+  card.setAttribute("value", index);
 
   const title = document.createElement("h1");
   const name = capitilize(item.name);
@@ -52,54 +53,63 @@ const createListCard = (item, index) => {
   const equipment = capitilize(item.equipment);
   equip.innerHTML = `Equipment needed: ${equipment}`;
 
-  const addButton = document.createElement("button");
-  addButton.setAttribute("class", "add");
-  addButton.setAttribute("value", index);
-  addButton.innerHTML = "Add";
+  const button = document.createElement("button");
+  button.setAttribute("class", "button");
+  button.setAttribute("value", index);
+  button.innerHTML = "+";
 
-  addButton.addEventListener("click", (e) => {
+  button.addEventListener("click", (e) => {
     const exerciseCardIndex = e.target.value;
     const exercise = exerciseList[exerciseCardIndex];
     schedule.push(exercise);
     renderSchedule();
   });
 
-  card.append( title, gif, muscle, equipment, addButton);
+  card.append(title, gif, muscle, equipment, button);
 
   return card;
 };
 
 //CREATES EXERCISE SCHEDULE
 const createScheduleCard = (item, index) => {
+  const card = document.createElement("article");
+  card.setAttribute("class", "record");
 
-  const card = document.createElement('article');
-  card.setAttribute('class', 'record');
-
-  const title = document.createElement('p');
-  title.setAttribute('class', 'info');
+  const title = document.createElement("p");
+  title.setAttribute("class", "info");
   const name = capitilize(item.name);
   title.innerHTML = name;
 
   // TODO possibly make gif and have a hover feature
-  
-  const muscle = document.createElement('p');
-  muscle.setAttribute('class', 'info');
+
+  const muscle = document.createElement("p");
+  muscle.setAttribute("class", "info");
   const target = capitilize(item.target);
   muscle.innerHTML = target;
 
-  const equip = document.createElement('p');
-  equip.setAttribute('class', 'info');
+  const equip = document.createElement("p");
+  equip.setAttribute("class", "info");
   const equipment = capitilize(item.equipment);
-  equip.innerHTML = item.equipment;
-
-  const removeButton = document.createElement("button");
-  removeButton.setAttribute("class", "remove");
-  removeButton.setAttribute("value", index);
-  removeButton.innerHTML = "X";
+  equip.innerHTML = equipment;
 
   //TODO Write remove event handler
 
-  card.append(title, muscle, equipment);
+  const button = document.createElement("button");
+  button.setAttribute("class", "button");
+  button.setAttribute("value", index);
+  button.innerHTML = "X";
+
+  button.addEventListener("click", (e) => {
+    const exerciseCardIndex = e.target.value;
+    if (exerciseCardIndex === 0) {
+      schedule = [];
+      return renderSchedule();
+    } 
+      schedule.splice(exerciseCardIndex, exerciseCardIndex);
+      renderSchedule();
+  });
+
+  card.append(title, muscle, equip, button);
 
   return card;
 };
@@ -156,3 +166,10 @@ select.addEventListener("change", (e) => {
   bodyPart = e.target.value;
   fetchExerciseData();
 });
+
+const reset = document.querySelector('.reset');
+
+reset.addEventListener('click', (e)=> {
+  schedule = [];
+  renderSchedule();
+})
