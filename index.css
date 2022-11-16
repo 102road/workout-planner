@@ -19,6 +19,7 @@ h1{
 
 .header{
     height: 30%;
+    width: 100%;
     display: flex;
 }
 
@@ -27,7 +28,6 @@ h1{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    flex-direction: column;
     overflow-x: auto;
 }
 
@@ -53,7 +53,19 @@ h1{
     margin: 1rem 0;
 }
 
-.schedule {
-    height: 80%;
+.schedule{
+    width: 80%;
+}
+
+.list {
     overflow-x: auto;
+    width: 100%;
+}
+
+.record{
+    display: flex;
+}
+
+.info{
+    width: 30%;
 }

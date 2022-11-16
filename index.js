@@ -8,10 +8,9 @@ const options = {
 };
 
 const parentEl = document.querySelector(".main");
-const scheduleEl = document.querySelector(".schedule");
+const scheduleEl = document.querySelector(".list");
 let exerciseList = [];
 let bodyPart = "";
-let listSizeIndicator = 0;
 let schedule = [];
 
 // Capitilization fuunction
@@ -77,7 +76,7 @@ const createScheduleCard = (item, index) => {
   card.setAttribute('class', 'record');
 
   const title = document.createElement('p');
-  title.setAttribute('class', 'title');
+  title.setAttribute('class', 'info');
   const name = capitilize(item.name);
   title.innerHTML = name;
 
@@ -89,18 +88,18 @@ const createScheduleCard = (item, index) => {
   muscle.innerHTML = target;
 
   const equip = document.createElement('p');
-  equipment.setAttribute('class', 'info');
+  equip.setAttribute('class', 'info');
   const equipment = capitilize(item.equipment);
   equip.innerHTML = item.equipment;
 
   const removeButton = document.createElement("button");
   removeButton.setAttribute("class", "remove");
   removeButton.setAttribute("value", index);
-  removeButton.innerHTML = "Remove";
+  removeButton.innerHTML = "X";
 
   //TODO Write remove event handler
 
-  card.append(title, muscle, equipment, removeButton);
+  card.append(title, muscle, equipment);
 
   return card;
 };
@@ -130,7 +129,7 @@ const fetchExerciseData = () => {
   )
     .then((response) => response.json())
     .then((response) => {
-      exerciseList = response.slice(listSizeIndicator, listSizeIndicator + 25);
+      exerciseList = response;
       renderExercises();
     })
     .catch((err) => console.error(err));
@@ -156,20 +155,4 @@ const select = document.querySelector(".select");
 select.addEventListener("change", (e) => {
   bodyPart = e.target.value;
   fetchExerciseData();
-});
-
-const button = document.querySelector(".button");
-
-button.addEventListener("click", () => {
-  listSizeIndicator = listSizeIndicator + 25;
-  fetchExerciseData();
-});
-
-const previous = document.querySelector(".previous");
-
-previous.addEventListener("click", () => {
-  if (listSizeIndicator) {
-    listSizeIndicator = listSizeIndicator - 25;
-    fetchExerciseData();
-  }
 });
