@@ -14,6 +14,13 @@ let bodyPart = "";
 let listSizeIndicator = 0;
 let schedule = [];
 
+// Capitilization fuunction
+
+const capitilize = (str) => {
+  let join = str[0].toUpperCase() + str.slice(1);
+  return join;
+}
+
 //CREATES OPTIONS SELECT DROPDOWN
 const createOption = (item) => {
   const option = document.createElement("option");
@@ -31,18 +38,20 @@ const createListCard = (item, index) => {
   card.setAttribute("class", "article");
 
   const title = document.createElement("h1");
-  title.innerHTML = item.name;
+  const name = capitilize(item.name);
+  title.innerHTML = name;
 
   const gif = document.createElement("img");
   gif.setAttribute("src", item.gifUrl);
   gif.setAttribute("class", "gif");
 
   const muscle = document.createElement("p");
-  muscle.innerHTML = `Target muscle: ${item.target}`;
+  const target = capitilize(item.target);
+  muscle.innerHTML = `Target muscle: ${target}`;
 
-  const equipment = document.createElement("p");
-  equipment.setAttribute("class", "equipment");
-  equipment.innerHTML = `Equipment needed: ${item.equipment}`;
+  const equip = document.createElement("p");
+  const equipment = capitilize(item.equipment);
+  equip.innerHTML = `Equipment needed: ${equipment}`;
 
   const addButton = document.createElement("button");
   addButton.setAttribute("class", "add");
@@ -56,9 +65,9 @@ const createListCard = (item, index) => {
     renderSchedule();
   });
 
-  exerciseCard.append(card, title, gif, muscle, equipment, addButton);
+  card.append( title, gif, muscle, equipment, addButton);
 
-  return exerciseCard;
+  return card;
 };
 
 //CREATES EXERCISE SCHEDULE
@@ -69,17 +78,20 @@ const createScheduleCard = (item, index) => {
 
   const title = document.createElement('p');
   title.setAttribute('class', 'title');
-  title.innerHTML = item.name
+  const name = capitilize(item.name);
+  title.innerHTML = name;
 
   // TODO possibly make gif and have a hover feature
   
   const muscle = document.createElement('p');
   muscle.setAttribute('class', 'info');
-  muscle.innerHTML = item.target
+  const target = capitilize(item.target);
+  muscle.innerHTML = target;
 
-  const equipment = document.createElement('p');
+  const equip = document.createElement('p');
   equipment.setAttribute('class', 'info');
-  equipment.innerHTML = item.equipment;
+  const equipment = capitilize(item.equipment);
+  equip.innerHTML = item.equipment;
 
   const removeButton = document.createElement("button");
   removeButton.setAttribute("class", "remove");

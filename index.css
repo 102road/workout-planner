@@ -13,6 +13,10 @@ body{
     height: 100%;
 }
 
+h1{
+    font-size: 1.25rem;
+}
+
 .header{
     height: 30%;
     display: flex;
@@ -35,8 +39,8 @@ body{
     border: solid 2px grey;
     border-radius: 1rem;
     margin: 1rem;
-    width: 20%;
-    height: 100%;
+    width: 20rem;
+    height: 30rem;
 }
 
 .button{
