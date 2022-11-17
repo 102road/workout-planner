@@ -65,7 +65,7 @@ const createListCard = (item, index) => {
     renderSchedule();
   });
 
-  card.append(title, gif, muscle, equipment, button);
+  card.append(title, gif, muscle, equip, button);
 
   return card;
 };
@@ -100,13 +100,10 @@ const createScheduleCard = (item, index) => {
   button.innerHTML = "X";
 
   button.addEventListener("click", (e) => {
-    const exerciseCardIndex = e.target.value;
-    if (exerciseCardIndex === 0) {
-      schedule = [];
-      return renderSchedule();
-    } 
-      schedule.splice(exerciseCardIndex, exerciseCardIndex);
-      renderSchedule();
+    const exerciseCardIndex = Number(e.target.value);
+    console.log(typeof(exerciseCardIndex));
+    schedule = schedule.slice(0, exerciseCardIndex).concat(schedule.slice(exerciseCardIndex + 1));
+    renderSchedule();
   });
 
   card.append(title, muscle, equip, button);
@@ -167,9 +164,9 @@ select.addEventListener("change", (e) => {
   fetchExerciseData();
 });
 
-const reset = document.querySelector('.reset');
+const reset = document.querySelector(".reset");
 
-reset.addEventListener('click', (e)=> {
+reset.addEventListener("click", (e) => {
   schedule = [];
   renderSchedule();
-})
+});

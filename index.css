@@ -1,11 +1,20 @@
+/* 
+Seafoam #C4DFE6
+Deep Aqua #003B46
+Wave #66A5AD
+
+Mist #90AFC5
+Stone #336B87
+Shadow #2A3132
+*/
+
 *{
     box-sizing: border-box;
     margin: 0;
-}
+    background-color: #C4DFE6;
+    color: #90AFC5;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
-
-html{
-    height: 100vh;
 }
 
 body{
@@ -21,6 +30,8 @@ h1{
     height: 30%;
     width: 100%;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .main{
@@ -36,7 +47,7 @@ h1{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: solid 2px grey;
+    border: solid 2px #336B87;
     border-radius: 1rem;
     margin: 1rem;
     width: 20rem;
@@ -64,4 +75,13 @@ h1{
 
 .info{
     width: 30%;
+    font-weight: 600;
+}
+
+.button{
+    padding: 0.25rem;
+    border: 1px solid #336B87;
+    border: 1rem;
+    background-color: #003B46;
+    color: white;
 }
