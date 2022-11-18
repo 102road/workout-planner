@@ -24,10 +24,8 @@ const capitilize = (str) => {
 const createOption = (item) => {
   const option = document.createElement("option");
   option.setAttribute("value", item);
-  option.innerHTML = item;
-
+  option.innerHTML = capitilize(item);
   const select = document.querySelector(".select");
-
   select.append(option);
 };
 
@@ -37,7 +35,8 @@ const createListCard = (item, index) => {
   card.setAttribute("class", "article");
   card.setAttribute("value", index);
 
-  const title = document.createElement("h1");
+  const title = document.createElement("h2");
+  title.setAttribute('class', 'name');
   const name = capitilize(item.name);
   title.innerHTML = name;
 
@@ -54,9 +53,9 @@ const createListCard = (item, index) => {
   equip.innerHTML = `Equipment needed: ${equipment}`;
 
   const button = document.createElement("button");
-  button.setAttribute("class", "button");
+  button.setAttribute("class", "add");
   button.setAttribute("value", index);
-  button.innerHTML = "+";
+  button.innerHTML = "Add";
 
   button.addEventListener("click", (e) => {
     const exerciseCardIndex = e.target.value;
@@ -73,10 +72,10 @@ const createListCard = (item, index) => {
 //CREATES EXERCISE SCHEDULE
 const createScheduleCard = (item, index) => {
   const card = document.createElement("article");
-  card.setAttribute("class", "record");
+  card.setAttribute("class", "item");
 
   const title = document.createElement("p");
-  title.setAttribute("class", "info");
+  title.setAttribute("class", "info exercise");
   const name = capitilize(item.name);
   title.innerHTML = name;
 
@@ -95,7 +94,7 @@ const createScheduleCard = (item, index) => {
   //TODO Write remove event handler
 
   const button = document.createElement("button");
-  button.setAttribute("class", "button");
+  button.setAttribute("class", "remove");
   button.setAttribute("value", index);
   button.innerHTML = "X";
 
