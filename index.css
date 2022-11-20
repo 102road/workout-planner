@@ -1,39 +1,165 @@
+/* 
+Seafoam #C4DFE6
+Deep Aqua #003B46
+Wave #66A5AD
+
+Mist #90AFC5
+Stone #336B87
+Shadow #2A3132
+*/
+
 *{
     box-sizing: border-box;
+    margin: 0;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+html{
+    height: 98vh;
 }
 
 body{
+    height: 100%;
+    background-color: #C4DFE6;
+}
+
+.header{
+    height: 30%;
+    width: 97.7%;
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.title{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select{
+    margin: 1rem;
+}
+
+.schedule{
+    width: 80%;
+    background-color: #003B46;
+    border: 2px solid #336B87;
+    border-radius: 0 0 1rem 1rem;
+}
+
+.list {
+    overflow-x: auto;
+    height: 90%;
+
+}
+
+.record{
+    width: 94.5%;
+    display: flex;
+    justify-content: space-between;
+    background-color: #003B46;
+}
+
+.record-info{
+    width: 30%;
+    background-color: #003B46;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.item{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.exercise{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 1.2rem;
+}
+
+.hide{
+    display: none;
+    width: 8.5rem;
+    position: absolute;
+    left: 10%;
+    top: 14%;
     background-color: white;
+    }
+    
+.exercise:hover + .hide{
+        display: block;
+    }
+
+.info{
+    width: 30%;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.remove{
+    margin: 0 1rem;
+}
+
+.add{
+    width: 80%;
+    background-color: #003B46;
+    color: white;
+    border: 1px solid #336B87;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 0.25rem;
+}
+
+.add:hover{
+    cursor: pointer;
+    background-color: #336B87;
 }
 
 .main{
+    height: 70%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    overflow-x: auto;
+}
+
+.main:hover{
+    border-top: 1px solid black;
+}
+
+.main::-webkit-scrollbar{
+    width: 0;
 }
 
 .article{
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: solid 2px grey;
+    background-color: white;
+    border: solid 2px #336B87;
     border-radius: 1rem;
-    margin: 1rem;
+    margin: 0 1rem 1rem 1rem;
     width: 20rem;
+    height: 30rem;
 }
 
-.button{
-    margin: 1rem;
+.name{
+    width: 95%;
+    height: 10%;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
 }
 
 .gif{
-    width: 15rem;
+    width: 90%;
     border-radius: 1rem;
-    margin: 1rem;
-}
-
-.schedule {
-    display: flex;
-    flex-wrap: wrap;
+    margin: 1rem 0;
 }

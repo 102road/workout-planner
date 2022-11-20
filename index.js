@@ -8,59 +8,109 @@ const options = {
 };
 
 const parentEl = document.querySelector(".main");
-const scheduleEl = document.querySelector(".schedule");
+const scheduleEl = document.querySelector(".list");
 let exerciseList = [];
 let bodyPart = "";
-let listSizeIndicator = 0;
 let schedule = [];
 
-//Functions that create elements
+// Capitilization fuunction
+
+const capitilize = (str) => {
+  let join = str[0].toUpperCase() + str.slice(1);
+  return join;
+};
+
+//CREATES OPTIONS SELECT DROPDOWN
 const createOption = (item) => {
   const option = document.createElement("option");
   option.setAttribute("value", item);
-  option.innerHTML = item;
-
+  option.innerHTML = capitilize(item);
   const select = document.querySelector(".select");
-
   select.append(option);
 };
 
-const createExerciseItem = (item, index, option) => {
+//CREATES LIST OF EXERCISES
+const createListCard = (item, index) => {
   const card = document.createElement("article");
   card.setAttribute("class", "article");
+  card.setAttribute("value", index);
 
-  const title = document.createElement("h1");
-  title.setAttribute("class", "name");
-  title.innerHTML = item.name;
+  const title = document.createElement("h2");
+  title.setAttribute('class', 'name');
+  const name = capitilize(item.name);
+  title.innerHTML = name;
 
   const gif = document.createElement("img");
   gif.setAttribute("src", item.gifUrl);
   gif.setAttribute("class", "gif");
 
   const muscle = document.createElement("p");
-  muscle.setAttribute("class", "muscle");
-  muscle.innerHTML = `Target muscle: ${item.target}`;
+  const target = capitilize(item.target);
+  muscle.innerHTML = `Target muscle: ${target}`;
 
-  const equipment = document.createElement("p");
-  equipment.setAttribute("class", "equipment");
-  equipment.innerHTML = `Equipment needed: ${item.equipment}`;
+  const equip = document.createElement("p");
+  const equipment = capitilize(item.equipment);
+  equip.innerHTML = `Equipment needed: ${equipment}`;
 
-  // Button is given a value of index so the exercise can be found within the array so it can be added to the schedule
-  if (!option) {
-    const addButton = document.createElement("button");
-    addButton.setAttribute("class", "add");
-    addButton.setAttribute("value", index);
-    addButton.innerHTML = "Add";
-    card.append(addButton);
+  const button = document.createElement("button");
+  button.setAttribute("class", "add");
+  button.setAttribute("value", index);
+  button.innerHTML = "Add";
 
-    addButton.addEventListener("click", (e) => {
-      const exerciseCardIndex = e.target.value;
-      const exercise = exerciseList[exerciseCardIndex];
-      schedule.push(exercise);
-      renderSchedule();
-    });
-  }
-  card.append(title, gif, muscle, equipment);
+  button.addEventListener("click", (e) => {
+    const exerciseCardIndex = e.target.value;
+    const exercise = exerciseList[exerciseCardIndex];
+    schedule.push(exercise);
+    renderSchedule();
+  });
+
+  card.append(title, gif, muscle, equip, button);
+
+  return card;
+};
+
+//CREATES EXERCISE SCHEDULE
+const createScheduleCard = (item, index) => {
+  const card = document.createElement("article");
+  card.setAttribute("class", "item");
+
+  const title = document.createElement("p");
+  title.setAttribute("class", "info exercise");
+  const name = capitilize(item.name);
+  title.innerHTML = name;
+
+  // TODO possibly make gif and have a hover feature
+
+  const gif = document.createElement('img');
+  gif.setAttribute('src', item.gifUrl );
+  gif.setAttribute('class', 'hide image');
+
+  const muscle = document.createElement("p");
+  muscle.setAttribute("class", "info");
+  const target = capitilize(item.target);
+  muscle.innerHTML = target;
+
+  const equip = document.createElement("p");
+  equip.setAttribute("class", "info");
+  const equipment = capitilize(item.equipment);
+  equip.innerHTML = equipment;
+
+  //TODO Write remove event handler
+
+  const button = document.createElement("button");
+  button.setAttribute("class", "remove");
+  button.setAttribute("value", index);
+  button.innerHTML = "X";
+
+  button.addEventListener("click", (e) => {
+    const exerciseCardIndex = Number(e.target.value);
+    console.log(typeof(exerciseCardIndex));
+    schedule = schedule.slice(0, exerciseCardIndex).concat(schedule.slice(exerciseCardIndex + 1));
+    renderSchedule();
+  });
+
+  card.append(title, gif, muscle, equip, button);
+
   return card;
 };
 
@@ -69,16 +119,18 @@ const createExerciseItem = (item, index, option) => {
 const renderExercises = () => {
   parentEl.innerHTML = "";
   exerciseList.forEach((exercise, index) =>
-    parentEl.appendChild(createExerciseItem(exercise, index, false))
+    parentEl.appendChild(createListCard(exercise, index))
   );
 };
 
 const renderSchedule = () => {
   scheduleEl.innerHTML = "";
   schedule.forEach((exercise, index) => {
-    scheduleEl.appendChild(createExerciseItem(exercise, index, true));
+    scheduleEl.appendChild(createScheduleCard(exercise, index));
   });
 };
+
+//FETCH FUNCTIONS
 
 const fetchExerciseData = () => {
   fetch(
@@ -87,13 +139,12 @@ const fetchExerciseData = () => {
   )
     .then((response) => response.json())
     .then((response) => {
-      exerciseList = response.slice(listSizeIndicator, listSizeIndicator + 24);
+      exerciseList = response;
       renderExercises();
     })
     .catch((err) => console.error(err));
 };
 
-//Create drop down menu function
 const fetchMenuData = () => {
   fetch("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", options)
     .then((response) => response.json())
@@ -102,6 +153,8 @@ const fetchMenuData = () => {
     })
     .catch((err) => console.error(err));
 };
+
+// MAIN
 
 fetchMenuData();
 
@@ -114,18 +167,9 @@ select.addEventListener("change", (e) => {
   fetchExerciseData();
 });
 
-const button = document.querySelector(".button");
+const reset = document.querySelector(".reset");
 
-button.addEventListener("click", () => {
-  listSizeIndicator = listSizeIndicator + 25;
-  fetchExerciseData();
-});
-
-const previous = document.querySelector(".previous");
-
-previous.addEventListener("click", () => {
-  if (listSizeIndicator) {
-    listSizeIndicator = listSizeIndicator - 25;
-    fetchExerciseData();
-  }
+reset.addEventListener("click", (e) => {
+  schedule = [];
+  renderSchedule();
 });
