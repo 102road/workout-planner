@@ -81,6 +81,10 @@ const createScheduleCard = (item, index) => {
 
   // TODO possibly make gif and have a hover feature
 
+  const gif = document.createElement('img');
+  gif.setAttribute('src', item.gifUrl );
+  gif.setAttribute('class', 'hide image');
+
   const muscle = document.createElement("p");
   muscle.setAttribute("class", "info");
   const target = capitilize(item.target);
@@ -105,7 +109,7 @@ const createScheduleCard = (item, index) => {
     renderSchedule();
   });
 
-  card.append(title, muscle, equip, button);
+  card.append(title, gif, muscle, equip, button);
 
   return card;
 };
